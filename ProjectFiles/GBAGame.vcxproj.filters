@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\gba">
+      <UniqueIdentifier>{337ce422-7957-453c-af40-aa29899ca917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gba">
+      <UniqueIdentifier>{7be74de5-b1ae-4e79-939a-b5f04c27f6a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Enemies">
+      <UniqueIdentifier>{92b4bd5e-7ce1-4923-9b76-6d9f75f51082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\MapRes">
+      <UniqueIdentifier>{f1958940-a6d8-4a92-8f57-06ca73ebb94f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Particles">
+      <UniqueIdentifier>{fb225119-5ce8-47c7-863c-25ee4447fb9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Projectiles">
+      <UniqueIdentifier>{ab48da14-9526-4437-b93f-6216b92ea901}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Makefile" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\sinlut.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gba_math.c">
+      <Filter>Source Files\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gba_drawing.c">
+      <Filter>Source Files\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gba_gfx.c">
+      <Filter>Source Files\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gba_input.c">
+      <Filter>Source Files\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="source\fv2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ParticleSystem.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Enemy.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Projectile.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Collision.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Player.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gba_mathUtil.c">
+      <Filter>Source Files\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MemoryManager.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="images\MapResources\BG_Collisions.cpp">
+      <Filter>Resource Files\MapRes</Filter>
+    </ClCompile>
+    <ClCompile Include="images\MapResources\BG_Maps.cpp">
+      <Filter>Resource Files\MapRes</Filter>
+    </ClCompile>
+    <ClCompile Include="images\MapResources\BG_Palette.cpp">
+      <Filter>Resource Files\MapRes</Filter>
+    </ClCompile>
+    <ClCompile Include="images\MapResources\BG_Tiles.cpp">
+      <Filter>Resource Files\MapRes</Filter>
+    </ClCompile>
+    <ClCompile Include="images\Particles\EmberParticle.c">
+      <Filter>Resource Files\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="images\Enemies\Knight.c">
+      <Filter>Resource Files\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="images\Enemies\Mage.c">
+      <Filter>Resource Files\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="images\Projectiles\VFireball.c">
+      <Filter>Resource Files\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="images\Projectiles\HFireball.c">
+      <Filter>Resource Files\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="images\TitleScreen.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Intellisense.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sinlut.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gba.h">
+      <Filter>Header Files\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gba_drawing.h">
+      <Filter>Header Files\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gba_gfx.h">
+      <Filter>Header Files\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gba_input.h">
+      <Filter>Header Files\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gba_math.h">
+      <Filter>Header Files\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gba_mathUtil.h">
+      <Filter>Header Files\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gba_reg.h">
+      <Filter>Header Files\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gba_types.h">
+      <Filter>Header Files\gba</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ParticleSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\fv2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MemoryManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="images\MapResources\BG_Externs.h">
+      <Filter>Resource Files\MapRes</Filter>
+    </ClInclude>
+    <ClInclude Include="images\Particles\EmberParticle.h">
+      <Filter>Resource Files\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="images\Enemies\Mage.h">
+      <Filter>Resource Files\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="images\Enemies\Knight.h">
+      <Filter>Resource Files\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="images\Projectiles\VFireball.h">
+      <Filter>Resource Files\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="images\Projectiles\HFireball.h">
+      <Filter>Resource Files\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="images\TitleScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
