@@ -1,0 +1,32 @@
+{
+	"proj_name": "DemoGame",
+	//"emu_path": "C:/Tools/mGBA-0.6.2/mGBA.exe",
+	"miDebuggerPath": "C:/Tools/devkitPro/devkitARM/bin/arm-none-eabi-gdb.exe",
+	"devkitIncludePath": "C:/Tools/devkitPro/devkitARM/arm-none-eabi/include",
+	"devkitLibPath": "C:/Tools/devkitPro/devkitARM/lib/gcc/arm-none-eabi/12.1.0/include",
+	"files.associations": {
+		"rocket4bpp.h": "c",
+		"gba.h": "c",
+		"particles.h": "c",
+		"gba_macros.h": "c",
+		"gba_types.h": "c",
+		"string.h": "c",
+		"gba_input.h": "c",
+		"gba_math.h": "c",
+		"input.h": "c",
+		"sprite_manager.h": "c",
+		"math3dhelper.h": "c",
+		"math.h": "c",
+		"cmath": "c",
+		"xutility": "c",
+		"functional": "c",
+		"system_error": "c",
+		"type_traits": "c",
+		"xlocnum": "c",
+		"xtr1common": "c",
+		"array": "c",
+		"tuple": "c",
+		"utility": "c",
+		"bitwise.h": "c"
+	}
+}

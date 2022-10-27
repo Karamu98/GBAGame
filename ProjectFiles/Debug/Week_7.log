@@ -1,5 +1,0 @@
-﻿  main.cpp
-  arm-none-eabi-g++ -MMD -MP -MF /c/Users/s1608758/Downloads/Week_7/build/main.d -gdwarf-2 -Wall -mcpu=arm7tdmi -mtune=arm7tdmi -mthumb -mthumb-interwork -iquote /c/Users/s1608758/Downloads/Week_7/include -I/c/devkitPro/libgba/include -I/c/Users/s1608758/Downloads/Week_7/build -fno-rtti -fno-exceptions -c /c/Users/s1608758/Downloads/Week_7/source/main.cpp -o main.o 
-  linking cartridge
-  built ... Week_7.gba
-  ROM fixed!

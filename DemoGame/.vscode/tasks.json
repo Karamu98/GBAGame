@@ -1,0 +1,93 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "options": {
+        "env": {
+          "proj_working_dir": "PWD=${config:proj_name}",
+          "proj_name": "${config:proj_name}"
+        }
+     },
+    "tasks": [
+        {
+            "label": "test env",
+            "type": "shell",
+            "command": "echo",
+            "args": [
+                "$env:proj_name"
+            ],
+        },
+        {
+            "label": "stop emulation",
+            "type": "shell",
+            "windows": {
+                "command": "${workspaceFolder}/kill_mGBA.bat"
+            }
+        },
+        {
+            "label": "make debug",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "DEBUG=1",
+                "$env:proj_working_dir",
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "make release",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "DEBUG=0",
+                "$env:proj_working_dir"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "clean",
+                "$env:proj_working_dir",
+            ],
+        },
+        {
+            "label": "gdb-debug",
+            "type": "shell",
+            "dependsOn": [
+                "make debug"
+            ],
+            "isBackground": false,
+            "windows": {
+				// TODO: MOVE EMU PATH
+                "command": "C:/Tools/mGBA-0.6.2/mGBA.exe -g ${workspaceFolder}/$env:proj_name.gba;sleep 5;echo debuggerReady"
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "run",
+            "type": "shell",
+            "dependsOn": [
+                "make release"
+            ],
+            "isBackground": true,
+            "windows": {
+				// TODO: MOVE EMU PATH
+                "command": "C:/Tools/mGBA-0.6.2/mGBA.exe ${cwd}/$env:proj_name.gba"
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always"
+            }
+        }
+    ]
+}

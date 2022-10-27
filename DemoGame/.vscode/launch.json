@@ -1,0 +1,32 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "2.0.0",
+    "configurations": [
+        {
+            "name": "(gdb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "gdb-debug", 
+            "postDebugTask": "stop emulation",
+            "serverLaunchTimeout": 10000,
+            "stopAtEntry": false,
+            "program": "${workspaceFolder}/DemoGame.elf",
+            "MIMode": "gdb",
+            "externalConsole": true,
+            "targetArchitecture": "arm",
+            "miDebuggerServerAddress": "localhost:2345",
+            "windows": {
+                "miDebuggerPath": "${config:miDebuggerPath}",
+                "setupCommands": [
+                    {
+                    "description": "Enable pretty-printing for gdb",
+                    "ignoreFailures": true,
+                        "text": "file ${workspaceFolder}/${config:proj_name}.elf -enable-pretty-printing"
+                    }]
+            }
+        },
+    ]
+}

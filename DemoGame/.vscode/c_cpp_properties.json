@@ -1,0 +1,33 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+				//"${workspaceFolder}/src",
+                "${config:devkitIncludePath}",
+                "${config:devkitLibPath}"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "ARM7",
+                "WIN32"
+            ],
+            "intelliSenseMode": "msvc-x64",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/src",
+                    "${workspaceFolder}/${config:proj_name}/resources",
+					"${config:devkitIncludePath}",
+					"${config:devkitLibPath}"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            },
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

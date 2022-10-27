@@ -1,0 +1,7 @@
+**/build/
+**/*.gba
+**/*.elf
+**/*.sav
+**/build/
+.vscode/ipch/
+xxx_*/
