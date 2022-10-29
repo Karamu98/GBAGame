@@ -3,13 +3,21 @@
 
 #include "utils/sprite_manager.h"
 
+typedef enum Direction
+{
+	DIR_Right, 
+	DIR_Left,
+	DIR_Up,
+	DIR_Down,
+}Direction;
+
 typedef struct EntityData
 {
 	Sprite Sprite;
-	u16 Colour;
+	Direction ForwardDirection;
 }EntityData;
 
-extern void InitEntity(EntityData* self, u16 x, u16 y, u16 w, u16 h, u16 colour);
+extern void InitEntity(EntityData* self, u8 x, u8 y, Texture* texRef, u16 tileIDX, u16 palIDX);
 
 
 

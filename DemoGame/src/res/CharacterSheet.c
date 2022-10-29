@@ -14,6 +14,8 @@
 //
 //======================================================================
 
+const unsigned char CharacterSheetSequence[] = {1, 2, 1, 0};
+
 const unsigned short CharacterSheetTiles[3072] __attribute__((aligned(4)))=
 {
 	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,

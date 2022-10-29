@@ -27,6 +27,13 @@
 		"array": "c",
 		"tuple": "c",
 		"utility": "c",
-		"bitwise.h": "c"
+		"bitwise.h": "c",
+		"entity.h": "c",
+		"stdlib.h": "c",
+		"charactersheet.h": "c",
+		"texture.h": "c",
+		"animation.h": "c",
+		"bg_externs.h": "c",
+		"map_bigmap.h": "c"
 	}
 }

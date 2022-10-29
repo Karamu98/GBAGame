@@ -31,26 +31,62 @@ u8 SpriteIDToIndex(u8 spriteID)
 	return final;
 }
 
-void InitSprite(Sprite* self, u8 id, fv2 pos, fv2 size)
+const u8 _attSizeLUT[][4][2]=
 {
-	self->ID = id;
-	self->Size = size;
-	u8 objIDX = SpriteIDToIndex(id);
-	self->Attributes = &obj_buffer[objIDX];
+	{ // SQUARE
+		{8, 8},
+		{16, 16},
+		{32, 32},
+		{64, 64}
+	},
+	{ // HORIZONTAL
+		{16, 8},
+		{32, 8},
+		{32, 16},
+		{64, 32}
+	},
+	{ // Vertical
+		{8, 16},
+		{8, 32},
+		{16, 32},
+		{32, 64}
+	}
+};
 
-	SetSpritePosition(id, pos);
-
-	self->YPos = (u8*)&self->Attributes->attr0;
-	self->XPos = (u8*)&self->Attributes->attr1;
-
+void InitSprite(Sprite* self, u8 id, u8 x, u8 y, Texture* texRef, u16 tileIDX, u16 palIDX)
+{
 	TagSprite(id);
+
+	self->ID = id;
+	self->_attributes = &obj_buffer[SpriteIDToIndex(id)];
+	self->YPos = (u8*)&self->_attributes->attr0;
+	self->XPos = (u8*)&self->_attributes->attr1;
+
+	u8 _ObjectMode = A0_MODE_REG;
+	u8 _GraphicsMode = A0_GFX_MODE_REG;
+	u8 _ColourMode = texRef->Is4Bpp ? A0_COLOUR_MODE_4BPP : A0_COLOUR_MODE_8BPP;
+	u8 _Shape = texRef->FrameWidth == texRef->FrameHeight ? A0_SHAPE_SQUARE : texRef->FrameWidth < texRef->FrameHeight ? A0_SHAPE_TALL : A0_SHAPE_WIDE;
+	u8 _Size = 0;
+	for(int i = 0; i < 4; ++i)
+	{
+		u8* cur = _attSizeLUT[_Shape][i];
+		if(cur[0] == texRef->FrameWidth && cur[1] == texRef->FrameHeight)
+		{
+			_Size = i;
+			break;
+		}
+	}
+
+	self->_attributes->attr0 = SetSpriteObjectAttrib0(y, _ObjectMode, _GraphicsMode, 0, _ColourMode, _Shape);
+	self->_attributes->attr1 = SetSpriteObjectAttrib1(x, 0, _Size);
+	self->_attributes->attr2 = SetSpriteObjectAttrib2(tileIDX, A2_PRIORITY_0, palIDX); // TODO: Manage Palette and tile alloc
 }
 
-void SetSpritePosition(u8 spriteID, fv2 newPos)
+void SetSpritePosition(u8 spriteID, u8 x, u8 y)
 {
 	SpriteObject* curObj = &obj_buffer[SpriteIDToIndex(spriteID)];
-	curObj->attr0 = BitSetU16ByMask(curObj->attr0, fix2uint(newPos.Y), A0_YPOS_MASK);
-	curObj->attr1 = BitSetU16ByMask(curObj->attr1, fix2uint(newPos.X), A1_XPOS_MASK);
+	curObj->attr0 = BitSetU16ByMask(curObj->attr0, fix2uint(y), A0_YPOS_MASK);
+	curObj->attr1 = BitSetU16ByMask(curObj->attr1, fix2uint(x), A1_XPOS_MASK);
 }
 
 fv2 GetSpritePosition(u8 spriteID)
@@ -63,13 +99,25 @@ fv2 GetSpritePosition(u8 spriteID)
 void SetSpriteTileIDX(u8 spriteID, u16 tileIDX)
 {
 	SpriteObject* curObj = &obj_buffer[SpriteIDToIndex(spriteID)];
-	curObj->attr2 = BitSetU16ByMask(curObj->attr0, tileIDX, A2_TILE_MASK);
+	curObj->attr2 = BitSetU16ByMask(curObj->attr2, tileIDX, A2_TILE_MASK);
 }
 
 u16 GetSpriteTileIDX(u8 spriteID)
 {
 	SpriteObject* curObj = &obj_buffer[SpriteIDToIndex(spriteID)];
 	return BitGetU16ByMask(curObj->attr2, A2_TILE_MASK);
+}
+
+void SetSpritePalIDX(u8 spriteID, u8 palIDX)
+{
+	SpriteObject* curObj = &obj_buffer[SpriteIDToIndex(spriteID)];
+	curObj->attr2 = BitSetU16ByMask(curObj->attr2, palIDX, A2_PALETTE_MASK);
+}
+
+u8 GetSpritePalIDX(u8 spriteID)
+{
+	SpriteObject* curObj = &obj_buffer[SpriteIDToIndex(spriteID)];
+	return BitGetU16ByMask(curObj->attr2, A2_PALETTE_MASK);
 }
 
 void TagSprite(u8 spriteID)

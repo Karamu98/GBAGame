@@ -134,6 +134,8 @@ typedef struct BackgroundOffset
 }ALIGN(4) BGOffset;
 //define for background offset regiter(s)
 #define REG_BG_OFFSET ((BGOffset*)(REG_BASE+0x0010))
+#define REG_BG0HOFS *(v_u16*)(REG_BASE+0x0010)
+#define REG_BG0VOFS *(v_u16*)(REG_BASE+0x0012)
 
 #define BG_TILEBLOCK_MASK     0x3 //There are only four tileblocks for BG tiles
 //Get tile block/page by number (0-3)

@@ -24,9 +24,7 @@ extern const unsigned short CharacterSheetTiles[3072];
 extern const unsigned short CharacterSheetPal[16];
 
 #define CharacterSheetSequenceLen 4
-const uint8_t CharacterSheetSequence[] = {1, 2, 1, 0};
-
-#define CharacterFramesPerRow 3
+extern const unsigned char CharacterSheetSequence[];
 
 #endif // GRIT_CHARACTERSHEET_H
 

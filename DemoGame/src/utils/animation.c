@@ -1,27 +1,39 @@
 #include "animation.h"
 
-void InitAnimation(AnimationData* self, u8 tpf, u8* seq, u8 len, u8 tileCount, u8 offset)
+void InitUniqueAnimation(AnimationUniqueData* self, u16* memTarget, Texture* target, Sequence* sequence, u8 ticksPerFrame)
 {
-	self->TicksPerFrame = tpf;
-	self->Sequence = seq;
-	self->Length = len;
-	self->FrameTileCount = tileCount;
-	self->FrameOffset = offset;
+	self->MemTarget = memTarget;
+	self->TargetTexture = target;
+	self->Sequence = sequence;
+	self->TicksPerFrame = ticksPerFrame;
 
 	self->_speedTick = 0;
-	self->_frameTick = 0;
+	self->CurFrame = 0;
+	if(target->Is4Bpp)
+	{
+		self->_dataLen = (target->FrameWidth * target->FrameWidth) * 0.5f;
+	}
+	else
+	{
+		self->_dataLen = (target->FrameWidth * target->FrameWidth);
+	}
 }
 
-void UpdateAnimation(AnimationData* animData)
+void UpdateUniqueAnimation(AnimationUniqueData* self)
 {
-	if(animData->_speedTick == 0)
+	if(self->_speedTick == 0)
 	{
-		animData->_speedTick = animData->TicksPerFrame;
-		++animData->_frameTick;
+		self->_speedTick = self->TicksPerFrame;
+		++self->CurFrame;
 	}
-	--animData->_speedTick;
+	--self->_speedTick;
 }
-u16 EvaluateAnimation(AnimationData* animData)
+
+void DrawUniqueAnimation(AnimationUniqueData* self)
 {
-	return animData->FrameOffset + (animData->Sequence[animData->_frameTick % animData->Length] * animData->FrameTileCount);
+	u8 seqIDX = self->CurFrame % self->Sequence->Len;
+	u8 curFrame = self->Sequence->Data[seqIDX];
+	curFrame += self->FrameOffset;
+	u16 offset = curFrame * self->_dataLen;
+	memcpy(self->MemTarget, self->TargetTexture->Data + (u16)(offset * 0.5f), self->_dataLen); // Copy character tiles into Tile memory block 4, start
 }

@@ -37,7 +37,7 @@ endif
 
 SRCDIR  	:= $(ROOTDIR)src
 ALLDIRS		:= $(dir $(wildcard $(SRCDIR)/*/.)) $(SRCDIR)
-SOURCES		:= $(foreach item, $(ALLDIRS), $(subst $(ROOTDIR),,$(realpath $(item))))
+SOURCES		:= $(foreach item, $(ALLDIRS), $(subst $(ROOTDIR),,$(realpath $(item)))) src/res/maps/BigMap src/res/maps/TallMap# TODO: FIX
 
 $(warning ROOTDIR: $(ROOTDIR))
 $(warning SOURCES: $(SOURCES))

@@ -2,24 +2,25 @@
 #define __ANIMATION_H__
 
 #include "../gba/gba_types.h"
+#include "texture.h"
 
-typedef struct AnimationData
+typedef struct AnimationUniqueData
 {
 	u8 TicksPerFrame; // TODO: Improve
-	u8* Sequence;
-	u8 Length;
-
-	u8 FrameTileCount;
+	Sequence* Sequence;
 	u8 FrameOffset;
 
-	u8 _frameTick; // Mod with len for sequence
+	Texture* TargetTexture;
+	u16* MemTarget;
+
+	u8 CurFrame; // Mod with len for sequence
 	u8 _speedTick; // Timer for incrementing _frameTick
-}AnimationData;
+	u32 _dataLen;
+}AnimationUniqueData;
 
-extern void InitAnimation(AnimationData* self, u8 tpf, u8* seq, u8 len, u8 tileCount, u8 offset);
-extern void UpdateAnimation(AnimationData* animData);
-extern u16 EvaluateAnimation(AnimationData* animData);
-
+extern void InitUniqueAnimation(AnimationUniqueData* self, u16* memTarget, Texture* target, Sequence* sequence, u8 ticksPerFrame);
+extern void UpdateUniqueAnimation(AnimationUniqueData* self);
+extern void DrawUniqueAnimation(AnimationUniqueData* self);
 
 
 #endif
