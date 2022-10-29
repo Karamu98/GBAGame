@@ -20,20 +20,17 @@ typedef struct GameData
 
 static GameData S_GameData;
 
-void copy64x64MapIntoMemory( const u16* a_mapData, u16 a_mapBlockAddress )
+typedef struct {u32 data[8]; } MapRow_Half;
+void FormatMapToMemory(u16* mapData, u16 baseMapBlock)
 {
-	typedef struct {u32 data[8]; } HALF_ROW;
-	//get a pointer to the map Ed data we want to convert pages for
-	HALF_ROW* src = (HALF_ROW*)a_mapData;
-	//a 32x32 map occupies one address space (32x16 bits no$gba demo's this well)
-	//a 64x32 map occupies two address spaces, 64x64 occupies four address spaces
-	HALF_ROW* dst0 = (HALF_ROW*)getBGMapBlock(a_mapBlockAddress);
-	HALF_ROW* dst1 = (HALF_ROW*)getBGMapBlock(a_mapBlockAddress+1);
-	HALF_ROW* dst2 = (HALF_ROW*)getBGMapBlock(a_mapBlockAddress+2);
-	HALF_ROW* dst3 = (HALF_ROW*)getBGMapBlock(a_mapBlockAddress+3);
-	//as there are 32 tiles per page row the following loop can be used.
-	//I am taking advantage of post increment here. The assignment operator happens
-	//before the increment operator
+	
+	MapRow_Half* src = (MapRow_Half*)mapData;
+
+	MapRow_Half* dst0 = (MapRow_Half*)getBGMapBlock(baseMapBlock);
+	MapRow_Half* dst1 = (MapRow_Half*)getBGMapBlock(baseMapBlock+1);
+	MapRow_Half* dst2 = (MapRow_Half*)getBGMapBlock(baseMapBlock+2);
+	MapRow_Half* dst3 = (MapRow_Half*)getBGMapBlock(baseMapBlock+3);
+
 	for( u32 i = 0; i < 32; ++i)
 	{
 		//copy row i of the left page
@@ -52,11 +49,10 @@ void LoadMap()
 {
 	memcpy(PAL_BG_BLOCK(0), Map_TallMap_Palette, Map_TallMap_PaletteLen); // Load the bg palette into memory
 	memcpy(getBGTileBlock(0), Map_TallMap_Tiles, Map_TallMap_TilesLen); // Load the tiles into memory
-	//memcpy(getBGMapBlock(0), bgMap, bgMapLen); // Copy map into memory
 
-	copy64x64MapIntoMemory(Map_TallMap_Map, 16);
+	FormatMapToMemory(Map_TallMap_Map, 1);
 
-	REG_BGCNT[0] = setBGControlRegister(0, 0, 0, 0, 16, 0, BG_REG_SIZE_64x64); // Set background control
+	REG_BGCNT[0] = setBGControlRegister(0, 0, 0, 0, 1, 0, BG_REG_SIZE_64x64); // Set background control
 }
 
 
