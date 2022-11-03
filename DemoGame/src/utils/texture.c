@@ -2,12 +2,6 @@
 
 #include "../res/CharacterSheet.h"
 
-
-const PaletteData S_Palettes[] = 
-{
-	{ CharacterSheetPal, CharacterSheetPalLen }
-};
-
 const Texture S_Textures[] = 
 {
 	{

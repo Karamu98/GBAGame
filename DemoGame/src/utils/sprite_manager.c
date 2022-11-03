@@ -85,8 +85,8 @@ void InitSprite(Sprite* self, u8 id, u8 x, u8 y, Texture* texRef, u16 tileIDX, u
 void SetSpritePosition(u8 spriteID, u8 x, u8 y)
 {
 	SpriteObject* curObj = &obj_buffer[SpriteIDToIndex(spriteID)];
-	curObj->attr0 = BitSetU16ByMask(curObj->attr0, fix2uint(y), A0_YPOS_MASK);
-	curObj->attr1 = BitSetU16ByMask(curObj->attr1, fix2uint(x), A1_XPOS_MASK);
+	curObj->attr0 = BitSetU16ByMask(curObj->attr0, y, A0_YPOS_MASK);
+	curObj->attr1 = BitSetU16ByMask(curObj->attr1, x, A1_XPOS_MASK);
 }
 
 fv2 GetSpritePosition(u8 spriteID)

@@ -34,6 +34,7 @@
 		"texture.h": "c",
 		"animation.h": "c",
 		"bg_externs.h": "c",
-		"map_bigmap.h": "c"
+		"map_bigmap.h": "c",
+		"map_tallmap.h": "c"
 	}
 }

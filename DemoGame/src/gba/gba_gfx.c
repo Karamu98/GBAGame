@@ -95,7 +95,7 @@ void oam_init(SpriteObject* obj, u8 count)
 	// Hide each object
 	while (nn--)
 	{
-		dst->attr0	= 0;
+		dst->attr0	= 161;
 		dst->attr1	= 0;
 		dst->attr2	= 0;
 		dst->padding= 0;

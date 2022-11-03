@@ -2,16 +2,10 @@
 #define __TEXTURE_H__
 
 #include "../gba/gba_types.h"
+#include "palette.h"
 
 // TEMP
 #define CHARACTER_SHEET_ASSET 0
-
-
-typedef struct PaletteData
-{
-	const u16* Data;
-	const u16 Len;
-}PaletteData;
 
 typedef struct Texture
 {
@@ -35,6 +29,5 @@ typedef struct Sequence
 
 extern const Texture S_Textures[];
 extern const Sequence S_Sequences[];
-extern const PaletteData S_Palettes[];
 
 #endif
