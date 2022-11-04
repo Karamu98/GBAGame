@@ -30,23 +30,32 @@ void InitGameData()
 
 	InitPlayer(&S_GameData.Player, 0, 0);
 
+	S_GameData.Camera.FollowTarget = &S_GameData.Player.Entity.Sprite.Transform;
 	u8 newX = (SCREEN_W >> 1) - (S_Textures[CHARACTER_SHEET_ASSET].FrameWidth >> 1);
 	u8 newY = (SCREEN_H >> 1) - (S_Textures[CHARACTER_SHEET_ASSET].FrameHeight >> 1);
-	SetSpritePosition(S_GameData.Player.Entity.Sprite.ID, newX, newY);
+	S_GameData.Player.Entity.Sprite.Transform.Position = (Vec2){newX, newY};
+	S_GameData.Camera.FollowOffset.Position = (Vec2){newX, newY};
 }
 
 void GameLoop()
 {
 	UpdatePlayer(&S_GameData.Player);
+}
 
-	S_GameData.Camera.Transform.Position.X += getAxis(HORIZONTAL) << 1;
-	S_GameData.Camera.Transform.Position.Y += -getAxis(VERTICAL) << 1;
+void LateUpdate()
+{
+	if(keyHit(A))
+	{
+		UpdateCamera(&S_GameData.Camera, S_SELECTEDMAP, 16);
+		UVec2 curCamPos = *(UVec2*)&S_GameData.Camera.Transform.Position;
+		RefreshMap(&S_Maps[S_SELECTEDMAP], 16, curCamPos);
+	}
+	if(keyDown(A))
+	{
+		UpdateCamera(&S_GameData.Camera, S_SELECTEDMAP, 16);
+	}
 
-	UVec2 curCamPos = *(UVec2*)&S_GameData.Camera.Transform.Position;
-	ScrollMap(&S_Maps[S_SELECTEDMAP], 16, curCamPos);
-
-	REG_BG_OFFSET[0].x = curCamPos.X;
-	REG_BG_OFFSET[0].y = curCamPos.Y;
+	DrawSprite(&S_GameData.Player.Entity.Sprite, &S_GameData.Camera);
 }
 
 int main()
@@ -65,6 +74,8 @@ int main()
 		UpdateInputBinds();
 
 		GameLoop();
+
+		LateUpdate();
 
 		oam_copy(MEM_OAM, obj_buffer, 1);
 	}

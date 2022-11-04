@@ -43,6 +43,7 @@
 		"xmemory": "c",
 		"xstring": "c",
 		"transform.h": "c",
-		"vector.h": "c"
+		"vector.h": "c",
+		"camera.h": "c"
 	}
 }

@@ -116,3 +116,26 @@ void ScrollMap(MapData* mapData, u16 baseMapBlock, UVec2 camPos)
 
 	lastCamPos = camPos;
 }
+
+void RefreshMap(MapData* mapData, u16 baseMapBlock, UVec2 camPos)
+{
+	const u8 ScreenTilesX = 30;
+	const u8 ScreenTilesY = 20;
+
+	for(s8 y = -1; y <= ScreenTilesY+1; ++y)
+	{
+		u16 mapPosY = ((camPos.Y >> 3) + y) & ((u16)mapData->Height - 1);
+		u16 screenPosY = ((camPos.Y >> 3) + y) & (u16)63;
+
+		for(s8 x = -1; x <= ScreenTilesX+1; ++x)
+		{
+			u16 mapPosX = ((camPos.X >> 3) + x) & ((u16)mapData->Width - 1);
+			u16 screenPosX = ((camPos.X >> 3) + x) & (u16)63;
+
+			u16* dst = getBGMapBlock(baseMapBlock) + se_index_fast(screenPosX, screenPosY);
+			u16 src = mapData->Data[mapPosY * mapData->Width + mapPosX];
+
+			*dst = src;
+		}
+	}
+}

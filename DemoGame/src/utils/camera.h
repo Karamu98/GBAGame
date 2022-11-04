@@ -11,6 +11,6 @@ typedef struct Camera
 	Transform FollowOffset;
 }Camera;
 
-extern void UpdateCamera(Camera* camera);
+extern void UpdateCamera(Camera* camera, u8 selectedMap, u16 baseMapBlock);
 
 #endif

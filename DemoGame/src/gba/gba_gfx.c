@@ -73,12 +73,9 @@ void SetSpriteObjectPosition(SpriteObject* a_object, u8 a_x, u8 a_y)
 	a_object->attr1 = (a_object->attr1 & 0xFE00) | (a_x & 0x01FF);
 }
 
-#define BF_PREP2(x, name)        ( (x) & name)
-#define BF_SET2(y, x, name)      (y = ((y)&~name) | BF_PREP2(x, name) )
 void HideSpriteObject(SpriteObject* a_obj)
 {
-	BF_SET2(a_obj->attr0, A0_MODE_DISABLE, A0_MODE_MASK); 
-	// a_obj->attr0 = (a_obj->attr0 & ~A0_MODE_MASK) | A0_MODE_DISABLE;
+	a_obj->attr0 = (a_obj->attr0 & ~A0_MODE_MASK) | ((A0_MODE_DISABLE << 8) & A0_MODE_MASK);
 }
 
 //! Unhide an object.

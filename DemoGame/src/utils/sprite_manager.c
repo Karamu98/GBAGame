@@ -1,4 +1,6 @@
 #include "sprite_manager.h"
+#include "../gba/gba_drawing.h"
+#include "../gba/gba_mathUtil.h"
 
 #include "bitwise.h"
 
@@ -53,7 +55,7 @@ static u8 _attSizeLUT[][4][2]=
 	}
 };
 
-void InitSprite(Sprite* self, u8 id, u8 x, u8 y, Texture* texRef, u16 tileIDX, u16 palIDX)
+void InitSprite(Sprite* self, u8 id, u8 screenX, u8 screenY, Texture* texRef, u16 tileIDX, u16 palIDX)
 {
 	TagSprite(id);
 
@@ -77,23 +79,23 @@ void InitSprite(Sprite* self, u8 id, u8 x, u8 y, Texture* texRef, u16 tileIDX, u
 		}
 	}
 
-	self->_attributes->attr0 = SetSpriteObjectAttrib0(y, _ObjectMode, _GraphicsMode, 0, _ColourMode, _Shape);
-	self->_attributes->attr1 = SetSpriteObjectAttrib1(x, 0, _Size);
+	self->_attributes->attr0 = SetSpriteObjectAttrib0(screenY, _ObjectMode, _GraphicsMode, 0, _ColourMode, _Shape);
+	self->_attributes->attr1 = SetSpriteObjectAttrib1(screenX, 0, _Size);
 	self->_attributes->attr2 = SetSpriteObjectAttrib2(tileIDX, A2_PRIORITY_0, palIDX); // TODO: Manage Palette and tile alloc
 }
 
-void SetSpritePosition(u8 spriteID, u8 x, u8 y)
+void SetSpriteScreenPosition(u8 spriteID, u16 screenX, u8 screenY)
 {
 	SpriteObject* curObj = &obj_buffer[SpriteIDToIndex(spriteID)];
-	curObj->attr0 = BitSetU16ByMask(curObj->attr0, y, A0_YPOS_MASK);
-	curObj->attr1 = BitSetU16ByMask(curObj->attr1, x, A1_XPOS_MASK);
+	curObj->attr0 = BitSetU16ByMask(curObj->attr0, screenY, A0_YPOS_MASK);
+	curObj->attr1 = BitSetU16ByMask(curObj->attr1, screenX, A1_XPOS_MASK);
 }
 
-fv2 GetSpritePosition(u8 spriteID)
+UVec2 GetSpriteScreenPosition(u8 spriteID)
 {
-	u8 y = (u8)obj_buffer[SpriteIDToIndex(spriteID)].attr0;
-	u8 x = (u8)obj_buffer[SpriteIDToIndex(spriteID)].attr1;
-	return (fv2){x, y};
+	u8 screenY = (u8)obj_buffer[SpriteIDToIndex(spriteID)].attr0;
+	u16 screenX = (u16)obj_buffer[SpriteIDToIndex(spriteID)].attr1;
+	return (UVec2){screenX, screenY};
 }
 
 void SetSpriteTileIDX(u8 spriteID, u16 tileIDX)
@@ -138,4 +140,29 @@ void DropSprite(u8 spriteID)
 	u8 mask = 1 << bitPos; 
 
 	S_SpriteFreeFlags[arrayPos] = S_SpriteFreeFlags[arrayPos] & (~mask); // Apply to u8 value
+}
+
+void SetSpriteHidden(u8 spriteID, bool isHidden)
+{
+	SpriteObject* curObj = &obj_buffer[SpriteIDToIndex(spriteID)];
+	if(!isHidden) {UnhideSpriteObject(curObj, 0);} else {HideSpriteObject(curObj);}
+}
+
+void DrawSprite(Sprite* self, Camera* activeCamera)
+{
+	Vec2 screenPos = SubVec2(&self->Transform.Position, &activeCamera->Transform.Position);
+
+	// Are we close enough to be on screen
+	if(screenPos.X >= 0 && screenPos.Y >= 0 && screenPos.X < (SCREEN_W + SCREEN_BLANK_HALF) && screenPos.Y < (SCREEN_H + SCREEN_BLANK_HALF))
+	{
+		u16 newX = ((u16)screenPos.X) % (SCREEN_W + SCREEN_BLANK_HALF);
+		u8 newY = ((u16)screenPos.Y) % (SCREEN_H + SCREEN_BLANK_HALF);
+
+		SetSpriteScreenPosition(self->ID, newX, newY);
+		SetSpriteHidden(self->ID, false);
+	}
+	else
+	{
+		SetSpriteHidden(self->ID, true);
+	}
 }

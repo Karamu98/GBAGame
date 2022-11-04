@@ -28,6 +28,7 @@ typedef struct MapData
 extern MapData S_Maps[];
 
 extern void ScrollMap(MapData* mapData, u16 baseMapBlock, UVec2 camPos);
+extern void RefreshMap(MapData* mapData, u16 baseMapBlock, UVec2 camPos);
 extern void LoadMap(MapData* map, bool loadPal, u8 palBlock, u8 tileBlock, u8 mapBlock);
 
 
