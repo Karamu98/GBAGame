@@ -39,8 +39,8 @@ s32 oscillate(s32 input, s32 min, s32 max)
     return f3 + min;
 }
 
-s32 clamp(s32 input, s32 min, s32 max)
+u32 clamp(u32 input, u32 min, u32 max)
 {
-	const s32 t = input < min ? min : input;
+	const u32 t = input < min ? min : input;
   	return t > max ? max : t;
 }

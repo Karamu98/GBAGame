@@ -19,13 +19,28 @@ typedef struct GameData
 
 static GameData S_GameData;
 
-static u8 S_SELECTEDMAP = MAP_TALL_ASSET;
+static u8 S_SELECTEDMAP = MAP_BIG_ASSET;
+
+typedef struct Rect
+{
+	u16 X;
+	u16 Y;
+	u16 W;
+	u16 H;
+}Rect;
+
+bool IsRectOverlapped(const Rect* self, const Rect* other)
+{
+	return self->X < other->X + other->W &&
+    self->X + self->W > other->X &&
+    self->Y < other->Y + other->H &&
+    self->H + self->Y > other->Y;
+}
 
 typedef struct {u32 data[8]; } MapRow_Half;
 void FormatMapToMemory(MapData* mapData, u16 baseMapBlock)
 {
 	MapRow_Half* src = (MapRow_Half*)mapData->Data;
-
 	MapRow_Half* dst = (MapRow_Half*)getBGMapBlock(baseMapBlock);
 
 	for( u32 i = 0; i < 32; ++i)
@@ -54,36 +69,43 @@ void ScrollMap(MapData* mapData, u16 baseMapBlock, u32 camPosX, u32 camPosY)
 	u16 mapPosX = (camPosX >> 3) & (u16)mapData->Width - 1; // / 8
 	u16 mapPosY = (camPosY >> 3) & (u16)mapData->Height - 1;
 
-	u16 screenPosX = (camPosX >> 3) & (u16)63;
-	u16 screenPosY = (camPosY >> 3) & (u16)63;
-
-	MapRow_Half* src = (MapRow_Half*)&mapData->Data[mapPosY * mapData->Width + mapPosX];
-
-	if(mapPosY != lastMapPosY)
-	{
-		u16 newMapPosY = 0; u16 newScreenPosY;
-		// Draw above camera
-		if(mapPosY < lastMapPosY)
-		{
-			newMapPosY = ((camPosY >> 3) - 1) & (u16)mapData->Height - 1;
-			newScreenPosY = ((camPosY >> 3) - 1) & (u16)63;
-		}
-		else // Draw below camera
-		{
-			newMapPosY = ((camPosY >> 3) + 20) & (u16)mapData->Height - 1;
-			newScreenPosY = ((camPosY >> 3) + 20) & (u16)63;
-		}
-
-		MapRow_Half* dst = (MapRow_Half*) ((u16*)getBGMapBlock(baseMapBlock) + se_index_fast(screenPosX, newScreenPosY));
-		MapRow_Half* src = (MapRow_Half*)&mapData->Data[newMapPosY * mapData->Width + mapPosX];
-		*dst++ = *src++;   *dst++ = *src++;
-	}
-
 	// TODO: Dont do this
 	if(mapPosX != lastMapPosX)
 	{
+		s16 curOffset = mapPosX < lastMapPosX ? -1 : 31;
+
+		for(u8 y = 0; y <= 20; ++y)
+		{
+			u16 newMapPosX = (u16)((s16)(camPosX >> 3) + curOffset) & (u16)mapData->Width - 1;
+			u16 newScreenPosX = (u16)((s16)(camPosX >> 3) + curOffset) & (u16)63;
+
+			u16 newMapPosY = ((camPosY >> 3) + y) & (u16)mapData->Height - 1;
+			u16 newScreenPosY = ((camPosY >> 3) + y) & (u16)63;
+
+			u32* dst = getBGMapBlock(baseMapBlock) + se_index_fast(newScreenPosX, newScreenPosY);
+			u32* src = &mapData->Data[newMapPosY * mapData->Width + newMapPosX];
+
+			*dst = *src;
+		}
 	}
 
+	if(mapPosY != lastMapPosY)
+	{
+		s16 curOffset = mapPosY < lastMapPosY ? 0 : 20;
+		u16 newMapPosY = ((camPosY >> 3) + curOffset) & (u16)mapData->Height - 1;
+		u16 newScreenPosY = ((camPosY >> 3) + curOffset) & (u16)63;		
+
+		for(u8 x = 0; x <= 30; ++x)
+		{
+			u16 newScreenPosX = ((camPosX >> 3) + x) & (u16)63;
+			u16 newMapPosX = ((camPosX >> 3) + x) & (u16)mapData->Width - 1;
+
+			u32* dst = getBGMapBlock(baseMapBlock) + se_index_fast(newScreenPosX, newScreenPosY);
+			u32* src = &mapData->Data[newMapPosY * mapData->Width + newMapPosX];
+
+			*dst = *src;
+		}
+	}
 
 	lastMapPosX = mapPosX;
 	lastMapPosY = mapPosY;
@@ -120,18 +142,19 @@ void InitGameData()
 // =====
 }
 
-fv2 playerPos;
+u32 playerPosX;
+u32 playerPosY;
 void GameLoop()
 {
 	UpdatePlayer(&S_GameData.Player);
 
-	//playerPos.X += getAxis(HORIZONTAL) * 500;
-	playerPos.Y += -getAxis(VERTICAL) * 500;
+	playerPosX += getAxis(HORIZONTAL) << 1;
+	playerPosY += -getAxis(VERTICAL) << 1;
 
-	ScrollMap(&S_Maps[S_SELECTEDMAP], 16, fix2int(playerPos.X), fix2int(playerPos.Y));
+	ScrollMap(&S_Maps[S_SELECTEDMAP], 16, playerPosX, playerPosY);
 
-	//REG_BG_OFFSET[0].x = (s16)fix2int(playerPos.X);
-	REG_BG_OFFSET[0].y = (s16)fix2int(playerPos.Y);
+	REG_BG_OFFSET[0].x = playerPosX;
+	REG_BG_OFFSET[0].y = playerPosY;
 }
 
 int main()
