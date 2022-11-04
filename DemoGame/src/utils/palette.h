@@ -6,7 +6,7 @@
 // TEMP
 #define CHARACTER_SHEET_PALETTE_ASSET 0
 #define MAP_TALL_PALETTE_ASSET 1
-#define MAP_BIG_ASSET 2
+#define MAP_BIG_PALETTE_ASSET 2
 
 typedef struct PaletteData
 {
@@ -14,6 +14,9 @@ typedef struct PaletteData
 	const u16 Len;
 }PaletteData;
 
-extern const PaletteData S_Palettes[];
+extern PaletteData S_Palettes[];
+
+extern void LoadSpritePalette(PaletteData* self, u8 slot);
+extern void LoadBackgroundPalette(PaletteData* self, u8 slot);
 
 #endif

@@ -7,8 +7,7 @@ const u8 S_TEMP_ANIM_MAP[] = {2, 1, 3, 0};
 void InitPlayer(PlayerEntityData* self, u16 tileIDX, u16 palIDX)
 {
 	InitEntity(&self->Entity, 10, 60, &S_Textures[CHARACTER_SHEET_ASSET], tileIDX, palIDX);
-	//BindActionToAxis(HORIZONTAL, &HandlePlayerMove, self->Entity.Sprite.XPos);
-	//BindActionToAxis(VERTICAL, &HandlePlayerMove, self->Entity.Sprite.YPos);
+	InitUniqueAnimation(&self->EntityAnim, sprite_tile_address(0), &S_Textures[CHARACTER_SHEET_ASSET], &S_Sequences[CHARACTER_SHEET_ASSET], 7);
 }
 
 void HandlePlayerMove(AXIS axis, s16 value, void* data)

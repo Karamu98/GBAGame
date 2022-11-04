@@ -22,12 +22,12 @@ typedef struct Texture
 
 typedef struct Sequence
 {
-	u8* Data;
-	u16 Len;
+	const u8* Data;
+	const u16 Len;
 }Sequence;
 
 
-extern const Texture S_Textures[];
-extern const Sequence S_Sequences[];
+extern Texture S_Textures[];
+extern Sequence S_Sequences[];
 
 #endif

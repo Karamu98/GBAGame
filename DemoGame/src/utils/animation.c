@@ -1,4 +1,5 @@
 #include "animation.h"
+#include <string.h>
 
 void InitUniqueAnimation(AnimationUniqueData* self, u16* memTarget, Texture* target, Sequence* sequence, u8 ticksPerFrame)
 {

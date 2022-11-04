@@ -2,7 +2,7 @@
 
 #include "../res/CharacterSheet.h"
 
-const Texture S_Textures[] = 
+Texture S_Textures[] = 
 {
 	{
 		CharacterSheetTiles,
@@ -15,7 +15,7 @@ const Texture S_Textures[] =
 	}
 };
 
-const Sequence S_Sequences[] =
+Sequence S_Sequences[] =
 {
 	{
 		CharacterSheetSequence,

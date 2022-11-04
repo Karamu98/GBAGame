@@ -35,6 +35,14 @@
 		"animation.h": "c",
 		"bg_externs.h": "c",
 		"map_bigmap.h": "c",
-		"map_tallmap.h": "c"
+		"map_tallmap.h": "c",
+		"atomic": "c",
+		"cstring": "c",
+		"xlocale": "c",
+		"xlocinfo": "c",
+		"xmemory": "c",
+		"xstring": "c",
+		"transform.h": "c",
+		"vector.h": "c"
 	}
 }

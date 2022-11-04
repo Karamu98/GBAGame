@@ -43,7 +43,6 @@ void BindActionToAxis(AXIS axis, void(*func)(AXIS, s16, void*), void* extraData)
 
 void UpdateInputBinds()
 {
-	u16 input = currentKeyState();
 	for(int i = 0; i < 10; ++i)
 	{
 		if(keyDown(1 << i))

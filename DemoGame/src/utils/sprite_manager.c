@@ -31,7 +31,7 @@ u8 SpriteIDToIndex(u8 spriteID)
 	return final;
 }
 
-const u8 _attSizeLUT[][4][2]=
+static u8 _attSizeLUT[][4][2]=
 {
 	{ // SQUARE
 		{8, 8},
@@ -59,8 +59,8 @@ void InitSprite(Sprite* self, u8 id, u8 x, u8 y, Texture* texRef, u16 tileIDX, u
 
 	self->ID = id;
 	self->_attributes = &obj_buffer[SpriteIDToIndex(id)];
-	self->YPos = (u8*)&self->_attributes->attr0;
-	self->XPos = (u8*)&self->_attributes->attr1;
+	self->ScreenYPos = (u8*)&self->_attributes->attr0;
+	self->ScreenXPos = (u8*)&self->_attributes->attr1;
 
 	u8 _ObjectMode = A0_MODE_REG;
 	u8 _GraphicsMode = A0_GFX_MODE_REG;

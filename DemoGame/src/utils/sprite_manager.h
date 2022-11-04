@@ -3,14 +3,16 @@
 
 #include "../gba/gba_gfx.h"
 #include "texture.h"
+#include "transform.h"
 
 #define INVALID_SPRITE_ID 0xFF
 
 typedef struct Sprite
 {
 	u8 ID;
-	u8* XPos;
-	u8* YPos;
+	u8* ScreenXPos;
+	u8* ScreenYPos;
+	Transform Transform;
 
 	SpriteObject* _attributes;
 }Sprite;
