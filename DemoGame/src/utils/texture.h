@@ -3,19 +3,21 @@
 
 #include "../gba/gba_types.h"
 #include "palette.h"
+#include "tiles.h"
 
 // TEMP
-#define CHARACTER_SHEET_ASSET 0
+#define CHARACTER_SHEET_TEXTURE_ASSET 0
+#define KNIGHT_TEXTURE_ASSET 1
+#define MAGE_TEXTURE_ASSET 2
+
+#define CHARACTER_SHEET_SEQUENCE_ASSET 0
 
 typedef struct Texture
 {
-	const u16* Data;
-	const u16 Len;
-	const bool Is4Bpp;
+	const Tiles* Tiles;
 	const u8 FrameWidth;
 	const u8 FrameHeight;
 	const u8 FramesPerRow;
-	const u16 TileCount;
 
 	PaletteData* LinkedPalette;
 }Texture;

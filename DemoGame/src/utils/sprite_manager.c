@@ -55,18 +55,29 @@ static u8 _attSizeLUT[][4][2]=
 	}
 };
 
-void InitSprite(Sprite* self, u8 id, u8 screenX, u8 screenY, Texture* texRef, u16 tileIDX, u16 palIDX)
+void InitSprite(Sprite* self, Vec2 worldPosition, u8 id, Texture* texRef, u16 tileIDX, u16 palIDX, bool loadTiles, bool loadPal)
 {
 	TagSprite(id);
+
+	if(loadTiles)
+	{
+		LoadSpriteTiles(texRef->Tiles, tileIDX, 0);
+	}
+
+	if(loadPal)
+	{
+		
+	}
 
 	self->ID = id;
 	self->_attributes = &obj_buffer[SpriteIDToIndex(id)];
 	self->ScreenYPos = (u8*)&self->_attributes->attr0;
 	self->ScreenXPos = (u8*)&self->_attributes->attr1;
+	self->Transform.Position = worldPosition;
 
 	u8 _ObjectMode = A0_MODE_REG;
 	u8 _GraphicsMode = A0_GFX_MODE_REG;
-	u8 _ColourMode = texRef->Is4Bpp ? A0_COLOUR_MODE_4BPP : A0_COLOUR_MODE_8BPP;
+	u8 _ColourMode = texRef->Tiles->Is4Bpp ? A0_COLOUR_MODE_4BPP : A0_COLOUR_MODE_8BPP;
 	u8 _Shape = texRef->FrameWidth == texRef->FrameHeight ? A0_SHAPE_SQUARE : texRef->FrameWidth < texRef->FrameHeight ? A0_SHAPE_TALL : A0_SHAPE_WIDE;
 	u8 _Size = 0;
 	for(int i = 0; i < 4; ++i)
@@ -79,9 +90,9 @@ void InitSprite(Sprite* self, u8 id, u8 screenX, u8 screenY, Texture* texRef, u1
 		}
 	}
 
-	self->_attributes->attr0 = SetSpriteObjectAttrib0(screenY, _ObjectMode, _GraphicsMode, 0, _ColourMode, _Shape);
-	self->_attributes->attr1 = SetSpriteObjectAttrib1(screenX, 0, _Size);
-	self->_attributes->attr2 = SetSpriteObjectAttrib2(tileIDX, A2_PRIORITY_0, palIDX); // TODO: Manage Palette and tile alloc
+	self->_attributes->attr0 = SetSpriteObjectAttrib0(0, _ObjectMode, _GraphicsMode, 0, _ColourMode, _Shape);
+	self->_attributes->attr1 = SetSpriteObjectAttrib1(0, 0, _Size);
+	self->_attributes->attr2 = SetSpriteObjectAttrib2(tileIDX, A2_PRIORITY_0, palIDX);
 }
 
 void SetSpriteScreenPosition(u8 spriteID, u16 screenX, u8 screenY)

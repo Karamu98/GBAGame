@@ -5,15 +5,8 @@
 #include "gba/gba_input.h"
 #include "utils/animation.h"
 
-typedef struct PlayerEntityData
-{
-	EntityData Entity;
-	AnimationUniqueData EntityAnim;
-
-}PlayerEntityData;
-
-extern void InitPlayer(PlayerEntityData* self, u16 tileIDX, u16 palIDX);
+extern void InitPlayer(EntityData* self);
 extern void HandlePlayerMove(AXIS axis, s16 value, void* data);
-extern void UpdatePlayer(PlayerEntityData* self);
+extern void UpdatePlayer(EntityData* self, AnimationUniqueData* anim);
 
 #endif

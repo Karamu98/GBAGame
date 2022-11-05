@@ -7,6 +7,8 @@
 #define CHARACTER_SHEET_PALETTE_ASSET 0
 #define MAP_TALL_PALETTE_ASSET 1
 #define MAP_BIG_PALETTE_ASSET 2
+#define KNIGHT_PALETTE_ASSET 3
+#define MAGE_PALETTE_ASSET 3
 
 typedef struct PaletteData
 {

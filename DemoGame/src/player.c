@@ -5,13 +5,10 @@
 
 const u8 S_TEMP_ANIM_MAP[] = {2, 1, 3, 0};
 
-void InitPlayer(PlayerEntityData* self, u16 tileIDX, u16 palIDX)
+void InitPlayer(EntityData* self)
 {
-	InitEntity(&self->Entity, 0, 0, &S_Textures[CHARACTER_SHEET_ASSET], tileIDX, palIDX);
-	InitUniqueAnimation(&self->EntityAnim, sprite_tile_address(0), &S_Textures[CHARACTER_SHEET_ASSET], &S_Sequences[CHARACTER_SHEET_ASSET], 7);
-
-	BindActionToAxis(HORIZONTAL, &HandlePlayerMove, &self->Entity.Sprite.Transform.Position.X);
-	BindActionToAxis(VERTICAL, &HandlePlayerMove, &self->Entity.Sprite.Transform.Position.Y);
+	BindActionToAxis(HORIZONTAL, &HandlePlayerMove, &self->Sprite.Transform.Position.X);
+	BindActionToAxis(VERTICAL, &HandlePlayerMove, &self->Sprite.Transform.Position.Y);
 }
 
 void HandlePlayerMove(AXIS axis, s16 value, void* data)
@@ -20,9 +17,9 @@ void HandlePlayerMove(AXIS axis, s16 value, void* data)
 	*target += axis == HORIZONTAL ? value : -value;
 }
 
-void UpdatePlayer(PlayerEntityData* self)
+void UpdatePlayer(EntityData* self, AnimationUniqueData* anim)
 {
-	Direction* newDir = &self->Entity.ForwardDirection;
+	Direction* newDir = &self->ForwardDirection;
 	if(keyDown(LEFT)) {*newDir = DIR_Left;}
 	if(keyDown(RIGHT)) {*newDir = DIR_Right;}
 	if(keyDown(UP)) {*newDir = DIR_Up;}
@@ -30,13 +27,12 @@ void UpdatePlayer(PlayerEntityData* self)
 
 	if(keyDown(LEFT | RIGHT | UP | DOWN))
 	{
-		UpdateUniqueAnimation(&self->EntityAnim);
+		UpdateUniqueAnimation(anim);
 	}
 	else
 	{
-		self->EntityAnim.CurFrame = 0;
+		anim->CurFrame = 0;
 	}
 
-	self->EntityAnim.FrameOffset = S_TEMP_ANIM_MAP[*newDir] * S_Textures[CHARACTER_SHEET_ASSET].FramesPerRow;
-	DrawUniqueAnimation(&self->EntityAnim);
+	anim->FrameOffset = S_TEMP_ANIM_MAP[*newDir] * S_Textures[CHARACTER_SHEET_TEXTURE_ASSET].FramesPerRow;
 }

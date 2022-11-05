@@ -17,7 +17,7 @@ typedef struct Sprite
 	SpriteObject* _attributes;
 }Sprite;
 
-extern void InitSprite(Sprite* self, u8 id, u8 screenX, u8 screenY, Texture* texRef, u16 tileIDX, u16 palIDX);
+extern void InitSprite(Sprite* self, Vec2 worldPosition, u8 id, Texture* texRef, u16 tileIDX, u16 palIDX, bool loadTiles, bool loadPal);
 
 extern void SetSpriteScreenPosition(u8 spriteID, u16 screenX, u8 screenY);
 extern UVec2 GetSpriteScreenPosition(u8 spriteID);

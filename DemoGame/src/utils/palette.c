@@ -7,12 +7,16 @@
 #include "../res/CharacterSheet.h"
 #include "../res/maps/TallMap/Map_TallMap.h"
 #include "../res/maps/BigMap/Map_BIGMap.h"
+#include "../res/Knight.h"
+#include "../res/Mage.h"
 
 PaletteData S_Palettes[] = 
 {
 	{ CharacterSheetPal, CharacterSheetPalLen },
 	{ Map_TallMap_Palette, Map_TallMap_PaletteLen},
-	{ Map_BIGMap_Palette, Map_BIGMap_PaletteLen}
+	{ Map_BIGMap_Palette, Map_BIGMap_PaletteLen},
+	{ KnightPal, KnightPalLen},
+	{ MagePal, MagePalLen}
 };
 
 void pal_init(PaletteData* self, u16* memSlot) { memcpy(memSlot, self->Data, self->Len); }
